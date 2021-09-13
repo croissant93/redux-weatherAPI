@@ -1,19 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import "../src/App.css";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./modules/index";
 import { Provider } from "react-redux";
-import addNumber from "./modules/addNumber";
+import logger from "redux-logger";
 import myLogger from "./middlewares/myLogger";
 import { createLogger } from "redux-logger";
 import createSagaMiddleware from "@redux-saga/core";
-import { rootSaga } from "./middlewares/sagas";
+import { rootSaga, getWeather, saga } from "./middlewares/sagas";
 // import * as serviceWorker from "./serviceWorker";
 import timer from "./modules/timer";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(timer, applyMiddleware(sagaMiddleware));
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(rootSaga);
 // console.log(store.getState());
 
